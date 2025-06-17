@@ -1,0 +1,2 @@
+Run claude desktop with the json in this directory and provide the following Git url for visualization:
+ https://github.com/sgahlot/rhcl-demo

@@ -1,0 +1,17 @@
+{
+    "mcpServers": {
+        "fetch": {
+            "command": "uvx",
+            "args": ["mcp-server-fetch"]
+        },
+        "visualize_code": {
+            "command": "<UV_LOCATION>",
+            "args": [
+                "--directory",
+                "<GITHUB_VIDUAL_DIR_FULL_PATH>",
+                "run",
+                "server.py"
+            ]
+        }
+    }
+}

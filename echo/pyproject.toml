@@ -1,0 +1,10 @@
+[project]
+name = "echo"
+version = "0.1.0"
+description = "Add your description here"
+readme = "readme.adoc"
+requires-python = ">=3.11"
+dependencies = [
+    "fastmcp>=2.8.1",
+    "mcp[cli]>=1.9.4",
+]

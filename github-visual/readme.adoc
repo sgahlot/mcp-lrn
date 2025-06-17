@@ -1,0 +1,66 @@
+= Github Visual MCP server
+
+:icons: font
+:note-caption: :information_source:
+:toc: left
+:toclevels: 5
+
+:uri-claude: https://claude.ai/download
+
+This repository contains `MCP` server that can be used to visualize a given Github repository.
+
+== Pre-requisites
+
+=== Install Claude Desktop
+Install `Claude Desktop` by following instructions on the {uri-claude}[Claude website]. 
+
+=== Run Claude Desktop
+Run Claude Desktop once it is installed
+
+
+== Run example
+
+=== Modify Claude config
+
+Modify the `claude_desktop_config.json` for the following:
+
+* Replace `<UV_LOCATION>` with the full path for `uv` executable based on your environment
+* Replace `<GITHUB_VIDUAL_DIR_FULL_PATH>` with the full path for the current (`github-visual`) directory
+
+Once above modifications are done, we will need to copy this json to correct location where
+Claude can read it to register our new server.
+
+=== Find Claude config location
+Find the correct location of the Claude config by performing these steps:
+
+* Open up Claude Desktop application
+* Open `Settings`
+* Click on `Developer` in the side panel
+* Click on `Edit Config` button
+
+This will open up the folder where Claude config resides. 
+
+=== Update Claude config
+Execute these steps in a terminal to copy your modified config to this location, after making a backup of the original config file:
+
+[source,console]
+----
+# Store Claude config directory location in an environment variable
+$ CLAUDE_CONFIG_DIR=<FOLDER_LOCATION_OF_CLAUDE_CONFIG>
+
+# Store config file name in another environment variable
+$ CLAUDE_CONFIG_JSON="claude_desktop_config.json"
+
+# Create a backup of the original config file
+$ cp $CLAUDE_CONFIG_DIR/$CLAUDE_CONFIG_JSON $CLAUDE_CONFIG_DIR/${CLAUDE_CONFIG_JSON}.ORG
+
+# Copy the modified config file to Claude config direcoty
+$ cp $CLAUDE_CONFIG_JSON $CLAUDE_CONFIG_DIR/$CLAUDE_CONFIG_JSON
+----
+
+=== Reload Claude config
+
+Restart Claude desktop and type the following Git url in a chat window for visualization:
+ https://github.com/sgahlot/rhcl-demo
+
+The visualization will take some time and _in case of an error, try the alternate method suggested by Claude_

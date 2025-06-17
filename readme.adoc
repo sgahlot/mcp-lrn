@@ -1,0 +1,39 @@
+= MCP servers/clients on local machine with uv
+:icons: font
+:note-caption: :information_source:
+:toc: left
+:toclevels: 5
+
+:uri-uv: https://github.com/astral-sh/uv
+:uri-echo: link:./echo/readme.adoc
+:uri-github-visual: link:./github-visual/readme.adoc
+
+This repository contains various `MCP` examples that can be run, by using `uv`, in each of the directories.
+
+== Pre-requisites
+
+=== Install uv
+Install `uv` by following instructions on the {uri-uv}[uv website]. 
+
+
+== Run examples
+
+Each example is fully contained in a sub-directory (e.g. echo, sql). Follow the steps given below
+to run a specific example:
+
+* Change directory, e.g. `cd echo`
+* Sync up the environment using the following command:
+  ** `uv sync`
+
+The `uv sync` command performs the following tasks:
+
+* Find or download an appropriate Python version
+* Creates a virtual environment in `.venv` folder
+* Build complete dependency using `uv.lock` file
+* Sync up project dependencies in the virtual environment
+
+
+== Example Links
+
+* {uri-echo}[Echo server/client] +
+* {uri-github-visual}[Github Visual server] +

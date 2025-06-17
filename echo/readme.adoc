@@ -1,0 +1,14 @@
+= Echo MCP servers/client
+
+This repository contains Echo `MCP` server/client that can be run by following these 
+commands in a terminal:
+
+* Change to `echo` directory by running `cd echo` command
+* Sync up the environment using the following command:
+  ** `uv sync`
+
+Once the packages are installed, run the server in a terminal by executing the following command:
+* `uv run echo-server.py`
+
+Now, open another terminal and run the following command to start the client:
+* `uv run echo-client.py`
