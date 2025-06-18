@@ -1,6 +1,4 @@
-def main():
-    print("Hello from mcp-rag-sql!")
+from init_employees import init_db
 
-
-if __name__ == "__main__":
-    main()
+print('Invoking init to initialize the db...')
+init_db()

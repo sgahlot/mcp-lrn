@@ -20,7 +20,7 @@ async def get_all_employees() -> List[Dict]:
   return employees
 
 
-@mcp.resource("employees://{employee_id}")
+@mcp.resource(uri="employee://{employee_id}", mime_type="application/json")
 async def get_employee(employee_id: int) -> Optional[Dict]:
   """Returns a single employee record based on the given employee_id"""
 
@@ -31,12 +31,11 @@ async def get_employee(employee_id: int) -> Optional[Dict]:
       columns = [column[0] for column in cursor.description]
       result = dict(zip(columns, row))
     else:
-      result = None
+      result = 'NOT FOUND'
 
     await cursor.close()
   
   return result
-
 
 @mcp.tool()
 async def delete_employee(employee_id: int) -> bool:
@@ -52,6 +51,20 @@ async def delete_employee(employee_id: int) -> bool:
       success = False
 
   return success
+
+@mcp.tool()
+async def init_db() -> str:
+  """Initializes the Employee database by creating the database and inserting a few records in it"""
+
+  # print('Initializing the database (OUTSIDE try/except)...')
+  try:
+    from init_employees import init_db
+    # print('Initializing the database...')
+    result = await init_db(False)
+  except Exception as ex:
+    result = f'Encountered an unexpected error while initializing the db: {ex}'
+
+  return result
 
 
 if __name__ == '__main__':

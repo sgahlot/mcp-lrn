@@ -1,6 +1,6 @@
 = Echo MCP servers/client
 
-This repository contains Echo `MCP` server/client that can be run by following these 
+This directory contains Echo `MCP` server/client that can be run by following these
 commands in a terminal:
 
 * Change to `echo` directory by running `cd echo` command

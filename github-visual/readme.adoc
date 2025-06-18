@@ -7,7 +7,7 @@
 
 :uri-claude: https://claude.ai/download
 
-This repository contains `MCP` server that can be used to visualize a given Github repository.
+This directory contains `MCP` server that can be used to visualize a given Github repository.
 
 == Pre-requisites
 

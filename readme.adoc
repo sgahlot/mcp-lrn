@@ -6,6 +6,7 @@
 
 :uri-uv: https://github.com/astral-sh/uv
 :uri-echo: link:./echo/readme.adoc
+:uri-sql: link:./sql/readme.adoc
 :uri-github-visual: link:./github-visual/readme.adoc
 
 This repository contains various `MCP` examples that can be run, by using `uv`, in each of the directories.
@@ -36,4 +37,5 @@ The `uv sync` command performs the following tasks:
 == Example Links
 
 * {uri-echo}[Echo server/client] +
+* {uri-sql}[SQL server/client] +
 * {uri-github-visual}[Github Visual server] +

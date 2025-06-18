@@ -1,0 +1,47 @@
+= SQL MCP server/client
+
+:icons: font
+:note-caption: :information_source:
+:toc: left
+:toclevels: 5
+
+This directory contains `MCP` SQL server showing following MCP functionalities:
+
+* Provides a resource to return all the Employees
+* Provides a resource to return a single Employee based on employee_id
+* Delete an Employee based on employee_id
+
+
+== Run example
+
+=== Initialize the virtual environment
+Execute the following command in a terminal:
+
+
+* Change to `sql` directory by running `cd sql` command
+* Sync up the environment using the following command:
+  ** `uv sync`
+
+=== Run server/client
+
+Execute the following command to start the MCP server in a terminal:
+
+* `uv run db-server.py`
+
+Execute the following command in a new terminal to start a client:
+
+* `uv run db-client.py`
+
+The client will perform the following tasks:
+
+* Lists all the `resources` exposed by the server
+* Lists all the `resource templates` exposed by the server
+* Lists all the `tools` exposed by the server
+* Initialize the database (_if it is not yet initialized_) by inserting 10 records in the `employee` table
+* Retrieves all the employees using the server resource
+* Retrieves a single employee (_with id=1_) using the server template resource
+* Deletes the employee with id=1
+* Again, retrieves all the employees using the server resource
+* Again, retrieves a single employee (_with id=1_) using the server template resource
+
+

@@ -70,44 +70,6 @@ async def summarize_prompt(text: str) -> list[dict]:
 info_mcp("Prompt 'summarize' added.")
 
 
-
-# # -----------------------
-# # Create a client to test the server...
-# # -----------------------
-
-
-# async def test_server_locally():
-#     from fastmcp import Client # Import the client
-#     print("\n--- Testing Server Locally ---")
-#     # Point the client directly at the server object
-#     client = Client(mcp)
-
-#     # Clients are asynchronous, so use an async context manager
-#     async with client:
-#         # Call the 'greet' tool
-#         greet_result = await client.call_tool("greet", {"name": "FastMCP User"})
-#         print(f"\n -> greet result: {greet_result}")
-
-#         # Call the 'add' tool
-#         add_result = await client.call_tool("add", {"a": 5, "b": 7})
-#         print(f"\n -> add result (of 5+7: {add_result}")
-
-#         # Read the 'config' resource
-#         config_data = await client.read_resource("data://config")
-#         print(f"\n -> config resource: {config_data}")
-
-#         # Read a user profile using the template
-#         user_profile = await client.read_resource("users://101/profile")
-#         print(f"\n -> User 101 profile: {user_profile}")
-
-#         # Get the 'summarize' prompt structure (doesn't execute the LLM call here)
-#         prompt_messages = await client.get_prompt("summarize", {"text": "This is some text."})
-#         print(f"\n -> Summarize prompt structure: {prompt_messages}\n")
-
-# # To test the server locally, uncomment the next line and comment out "if __name__ ==..." block
-# #asyncio.run(test_server_locally())
-
-# UNCOMMENT THE FOLLOWING BLOCK IF RUNNING SERVER WITH "uv run server.py"
 if __name__ == "__main__":
     print("\n--- Starting FastMCP Server via __main__ ---")
     # This starts the server, typically using the stdio transport by default
