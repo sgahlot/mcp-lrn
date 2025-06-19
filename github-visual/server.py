@@ -3,7 +3,7 @@ import httpx
 from mcp.server.fastmcp import FastMCP
 
 # Initialize FastMCP server
-mcp = FastMCP("visual_code_server")
+mcp = FastMCP("Visual Code Server")
 
 async def get_code(url: str) -> str:
     """

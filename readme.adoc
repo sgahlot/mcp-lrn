@@ -30,7 +30,7 @@ The `uv sync` command performs the following tasks:
 
 * Find or download an appropriate Python version
 * Creates a virtual environment in `.venv` folder
-* Build complete dependency using `uv.lock` file
+* Build complete dependency using `pyproject.toml` (and `uv.lock`) file(s)
 * Sync up project dependencies in the virtual environment
 
 

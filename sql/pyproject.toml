@@ -1,8 +1,8 @@
 [project]
-name = "mcp-rag-sql"
+name = "sql"
 version = "0.1.0"
 description = "Add your description here"
-readme = "README.md"
+readme = "readme.adoc"
 requires-python = ">=3.11"
 dependencies = [
     "aiosqlite>=0.21.0",

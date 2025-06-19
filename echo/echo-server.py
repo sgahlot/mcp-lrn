@@ -1,8 +1,9 @@
 from mcp.server.fastmcp import FastMCP
+from typing import Optional
 
 mcp = FastMCP(name="Echo")
 
-def info_mcp(msg: str = None):
+def info_mcp(msg: Optional[str] = None):
   print(f"{msg}\n -> {mcp}\n")
 
 info_mcp("FastMCP server object created")

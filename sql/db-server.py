@@ -1,5 +1,5 @@
 import aiosqlite
-from fastmcp import FastMCP
+from mcp.server.fastmcp import FastMCP
 from typing import List, Dict, Optional
  
 mcp = FastMCP(name="Employees MCP Server")
@@ -31,7 +31,7 @@ async def get_employee(employee_id: int) -> Optional[Dict]:
       columns = [column[0] for column in cursor.description]
       result = dict(zip(columns, row))
     else:
-      result = 'NOT FOUND'
+      result = None
 
     await cursor.close()
   

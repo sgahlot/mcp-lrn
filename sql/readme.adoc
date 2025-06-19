@@ -12,6 +12,11 @@ This directory contains `MCP` SQL server showing following MCP functionalities:
 * Delete an Employee based on employee_id
 
 
+== Pre-requisites
+
+=== Sync project
+Run `uv sync` in the `sql` directory to create the virtual environment
+
 == Run example
 
 === Initialize the virtual environment

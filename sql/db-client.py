@@ -1,6 +1,6 @@
 import asyncio
 from fastmcp import Client
-
+from typing import List
 
 async def get_all_employees(client: Client, extra_msg: str = ''):
   print(f'\n -> invoking resource to get all the employees{extra_msg}...')
@@ -60,6 +60,19 @@ async def delete_employee(client: Client, employee_id: int):
     print(f"   -> Deletion result: {result}")
 
 
+async def init_db(client: Client):
+  print('\n -> Invoking init_db to initialize the Employees database from the client...')
+  result = await client.call_tool('init_db')
+  await print_text(result, 'INIT_DB result')
+
+
+async def print_text(result: List[mcp.types.TextResourceContents], msg: str=''):
+  if len(result) > 0 and result[0] != None:
+    contents: mcp.types.TextResourceContents = result[0]
+    print(f'    -> {msg}: {contents.text}')
+  else:
+    print(f"   -> {msg}: {result}")
+
 
 async def run():
   async with Client("db-server.py") as client:
@@ -79,9 +92,10 @@ async def run():
     for tool in tools:
       print(f'   -> {tool}')
 
-    print('\n -> Invoking init_db to initialize the Employees database from the client...')
-    result = await client.call_tool('init_db')
-    print(f'    -> INIT_DB result: {result}')
+    await init_db(client)
+    #print('\n -> Invoking init_db to initialize the Employees database from the client...')
+    #result = await client.call_tool('init_db')
+    #print(f'    -> INIT_DB result: {result}')
 
     # Read the resource
     await get_all_employees(client)
@@ -89,9 +103,6 @@ async def run():
     await get_one_employee(client, 1)
 
     await delete_employee(client, 1)
-    # print('\n -> invoking tool to delete employee with id=1')
-    # result = await client.call_tool("delete_employee", {'employee_id': "1"})
-    # print(f"   -> Deletion result: {result}")
 
     await get_all_employees(client, ' (AGAIN AFTER DELETING 1 Employee)')
 
