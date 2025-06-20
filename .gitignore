@@ -9,5 +9,6 @@ wheels/
 # Virtual environments
 .venv
 
+.DS_Store
 db
 **/.claude_desktop_config.json

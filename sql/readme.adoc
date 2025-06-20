@@ -4,6 +4,7 @@
 :note-caption: :information_source:
 :toc: left
 :toclevels: 5
+:imagesdir: images
 
 This directory contains `MCP` SQL server showing following MCP functionalities:
 
@@ -19,34 +20,125 @@ Run `uv sync` in the `sql` directory to create the virtual environment
 
 == Run example
 
-=== Initialize the virtual environment
-Execute the following command in a terminal:
+=== Modify Claude config
+
+Execute the following commands to add the visual server in Claude config:
+
+[source,console]
+----
+# Enable virtual environment to run mcp command in order to install the server
+$ source .venv/bin/activate
+
+# Install visual code server in Claude config.
+# ** Use `where uv` if running this command on Windows
+$ `which uv` run mcp install db-server.py
+----
+
+=== Fix Claude config
+The following error is encountered when running this MCP server from Claude Desktop:
+
+* `Failed to run server: No module named 'aiosqlite'`
+
+In order to resolve this error, we need to manually modify the Claude config file. We first need to
+find the Claude config location.
+
+==== Find Claude config location
+Find the correct location of the Claude config by performing these steps:
+
+* Open up Claude Desktop application
+* Open `Settings`
+* Click on `Developer` in the side panel
+* Click on `Edit Config` button
+
+This will open up the folder where Claude config resides. 
+
+==== Modify Claude config
+
+Open the `claude_desktop_config.json` file present in the folder that was opened in the previous step.
+
+Modify this json, for `Employees MCP Server` mcpServer, as shown below:
+
+* Change the json element shown below (_this element should be added by `uv run mcp install db-server.py` command_):
+
+[source,json]
+----
+# Existing config
+    "Employees MCP Server": {
+      "command": "<UV_BIN_DIRECTORY>/uv",
+      "args": [
+        "run",
+        "--with",
+        "mcp[cli]",
+        "mcp",
+        "run",
+        "<MCP-LRN_REPO_DIR>/sql/db-server.py"
+      ]
+    }
+----
+
+* **to this**:
+
+[source,json]
+----
+
+# NEW config
+    "Employees MCP Server": {
+      "command": "<MCP-LRN_REPO_DIR>/sql/.venv/bin/mcp",
+      "args": [
+        "run",
+        "<MCP-LRN_REPO_DIR>/sql/db-server.py"
+      ]
+    }
+----
+
+  The <MCP-LRN_REPO_DIR> in the above snippet is where you have cloned the `mcp-lrn` repository.
 
 
-* Change to `sql` directory by running `cd sql` command
-* Sync up the environment using the following command:
-  ** `uv sync`
+=== Restart Claude Desktop
+Quit and re-run Claude Desktop to use the modified config.
 
-=== Run server/client
+=== Employees MCP Server tools
+Once the Claude Desktop is running, click on the `Search and tools` icon, as shown in the image 1, 
+to see the `Employees MCP Server`:
 
-Execute the following command to start the MCP server in a terminal:
+image::claude_employee_mcp_server.png[mcp_server]
+**Image 1**: Claude Search and tools icon
 
-* `uv run db-server.py`
+Click on `Employees MCP Server` and you shoulbe be able to see the tools as shown in the image 2:
 
-Execute the following command in a new terminal to start a client:
+image::claude_employee_mcp_server_tools.png[mcp_server_tools]
+**Image 2**: Employees MCP Server tools
 
-* `uv run db-client.py`
+=== Run some queries
 
-The client will perform the following tasks:
+Now that everything is setup and all the tools are available to use, use the following queries to get
+information about the Employees.
 
-* Lists all the `resources` exposed by the server
-* Lists all the `resource templates` exposed by the server
-* Lists all the `tools` exposed by the server
-* Initialize the database (_if it is not yet initialized_) by inserting 10 records in the `employee` table
-* Retrieves all the employees using the server resource
-* Retrieves a single employee (_with id=1_) using the server template resource
-* Deletes the employee with id=1
-* Again, retrieves all the employees using the server resource
-* Again, retrieves a single employee (_with id=1_) using the server template resource
+* `Get all the employees`
+  ** Claude should prompt you for allowing to run the `get_employees` tool (as shown in image 3).
+     Click on `Allow once` to have Claude run the tool
 
+image::claude_allow_once.png[allow_once]
+**Image 3**: Allow get_employees tool execution
+
+  Once the tools is executed, Claude should display all the employee records from the Employee table.
+
+* `Retrieve the employee with id 2`
+  ** Allow Claude to execute the tools by clicking on `Allow once`, when prompted.
+  ** The employee details with id=2 should be displayed
+* `Delete the employee with id 2`
+  ** Allow Claude to execute the tools by clicking on `Allow once`, when prompted
+  ** The employee with id=2 should be deleted (as shown in image 4).
+
+image::claude_delete_employee.png[delete_employee]
+**Image 4**: Delete employee
+
+* `Retrieve the employee with id 2`
+  ** Allow Claude to execute the tools by clicking on `Allow once`, when prompted.
+  ** The employee with ID 2 should NOT be found in the database (as shown in image 5).
+
+image::claude_fetch_deleted_employee.png[fetch_delete_employee]
+**Image 5**: Fetch deleted employee
+  
+  This shows Claude remembers about the context based on previous interactions.
 

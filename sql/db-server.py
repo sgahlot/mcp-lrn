@@ -1,23 +1,38 @@
 import aiosqlite
 from mcp.server.fastmcp import FastMCP
 from typing import List, Dict, Optional
- 
+import os
+
 mcp = FastMCP(name="Employees MCP Server")
  
-DB_PATH = "db/employees.db"
+script_path = os.path.abspath(__file__)
+base_database_dir = os.path.dirname(script_path)
+DB_PATH = f"{base_database_dir}/db/employees.db"
 TABLE_NAME = "employees"
 
 @mcp.resource("employees://all")
 async def get_all_employees() -> List[Dict]:
   """Returns all the employee records as a list of dictonaries"""
 
-  async with aiosqlite.connect(DB_PATH) as conn:
-    cursor = await conn.execute(f'SELECT * FROM {TABLE_NAME}')
-    columns = [column[0] for column in cursor.description]
-    employees = [dict(zip(columns, row)) async for row in cursor]
-    await cursor.close()
+  try:
+    async with aiosqlite.connect(DB_PATH) as conn:
+      cursor = await conn.execute(f'SELECT * FROM {TABLE_NAME}')
+      columns = [column[0] for column in cursor.description]
+      employees = [dict(zip(columns, row)) async for row in cursor]
+      await cursor.close()
 
-  return employees
+    return employees
+  except Exception as ex:
+    return [{"error": f'Encountered an unexpected error while getting all the employees: {ex}\nDB_PATH used={DB_PATH}'}]
+
+
+@mcp.tool("get_employees")
+async def get_employees() -> List[Dict]:
+  """
+  Returns all the employee records as a list of dictonaries.
+  Provided as a tool to run from inside Claude Desktop
+  """
+  return await get_all_employees()
 
 
 @mcp.resource(uri="employee://{employee_id}", mime_type="application/json")
@@ -37,6 +52,16 @@ async def get_employee(employee_id: int) -> Optional[Dict]:
   
   return result
 
+
+@mcp.tool("get_employee")
+async def get_employee_by_id(employee_id: int) -> Optional[Dict]:
+  """
+  Returns a single employee record based on the given employee_id
+  Provided as a tool to run from inside Claude Desktop
+  """
+  return await get_employee(employee_id)
+
+
 @mcp.tool()
 async def delete_employee(employee_id: int) -> bool:
   """Deletes an employee record based on the given employee_id. Returns True if successful"""
@@ -53,14 +78,14 @@ async def delete_employee(employee_id: int) -> bool:
   return success
 
 @mcp.tool()
-async def init_db() -> str:
+async def init_db(base_db_dir: str = '') -> str:
   """Initializes the Employee database by creating the database and inserting a few records in it"""
 
   # print('Initializing the database (OUTSIDE try/except)...')
   try:
     from init_employees import init_db
     # print('Initializing the database...')
-    result = await init_db(False)
+    result = await init_db(False, base_db_dir)
   except Exception as ex:
     result = f'Encountered an unexpected error while initializing the db: {ex}'
 

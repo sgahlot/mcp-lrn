@@ -1,9 +1,14 @@
-
-async def init_db(should_print: bool = True) -> str:
+async def init_db(should_print: bool = True, base_db_dir: str = '') -> str:
   import sqlite3
   import os
+
+  base_database_dir = base_db_dir if base_db_dir != '' else os.getcwd()
+  print(f'Base database directory: {base_database_dir}')
+
+  result: str = f'Creating database in {base_db_dir}/db...'
+
   # Create db directory if it doesn't exist
-  os.makedirs('db', exist_ok=True)
+  os.makedirs(f'{base_database_dir}/db', exist_ok=True)
 
   conn = sqlite3.connect('db/employees.db')
 
@@ -43,7 +48,7 @@ async def init_db(should_print: bool = True) -> str:
 
   conn.commit()
 
-  result = f'{len(employees)} {TABLE_NAME} inserted...'
+  result += f'\n {len(employees)} {TABLE_NAME} inserted...'
   if should_print:
     print(result)
 
