@@ -1,0 +1,147 @@
+= Letter counter (with and without gradio) MCP server
+
+:icons: font
+:note-caption: :information_source:
+:toc: left
+:toclevels: 5
+
+:uri-claude: https://claude.ai/download
+:uri-ex: https://huggingface.co/blog/gradio-mcp
+
+This directory contains `MCP` server that counts a given letter in a word.
+
+== Pre-requisites
+
+=== Sync project
+Run `uv sync` in the `gradio-letter-counter` directory to create the virtual environment
+
+=== Install Claude Desktop
+Install `Claude Desktop` by following instructions on the {uri-claude}[Claude website]. 
+
+
+== Run example
+
+If you want to try both, then remove the config that's added by `option 1` manually before trying `option 2`.
+
+
+=== Option 1 - Claude Desktop
+
+==== Modify Claude config
+
+Execute the following commands to add the visual server in Claude config:
+
+[source,console]
+----
+# Enable virtual environment to run mcp command in order to install the server
+$ source .venv/bin/activate
+
+# Install visual code server in Claude config.
+# ** Use `where uv` if running this command on Windows
+$ `which uv` run mcp install server.py
+----
+
+==== Run Claude Desktop
+Run Claude Desktop to use the modified config.
+
+Once the Claude Desktop is running, type the following query to test the tool:
+
+* `count how many times letter "s" appears in word "assistant"`
+  ** Claude should prompt you for allowing to run the `count_letter_in_word` tool.
+     Click on `Allow once` to have Claude run the tool.
+  ** Claude should show you the correct result from MCP server.
+
+
+=== Option 2 - Gradio
+
+==== Run Gradio server
+Run MCP server via `gradio` by executing the following command in a terminal:
+
+`uv run gradio-server.py`
+
+There are three ways you can test the tool when the MCP server is being run with Gradio.
+
+==== Testing - Option 1 - Gradio UI
+Test the tool by going to Gradio UI that's running at `http://127.0.0.1:7860` 
+
+  Verify the above port is correct by checking the output from previous step
+
+==== Testing - Option 2 - mcp client
+To test the tool, using a client from CLI, you can also run the following command in a terminal:
+
+`uv run gradio-client.py`
+
+==== Testing - Option 3 - Claude Desktop
+To test the tool with Claude Desktop, you will need to do the following:
+* Modify Claude config manually
+* Restart Claude Desktop
+* Test the tool in Claude Desktop
+
+===== Find Claude config location
+Find the correct location of the Claude config by performing these steps:
+
+* Open up Claude Desktop application
+* Open `Settings`
+* Click on `Developer` in the side panel
+* Click on `Edit Config` button
+
+This will open up the folder where Claude config resides. 
+
+===== Modify Claude config manually
+
+Open the `claude_desktop_config.json` file present in the folder that was opened in the previous step.
+
+Modify `mcpServers` element by adding a new MCP server as shown below:
+
+[source,json]
+----
+# Existing config
+{
+  "mcpServers": {
+    <EXISTING MCP SERVER>,
+    <EXISTING MCP SERVER>,
+    <EXISTING MCP SERVER>
+  }
+}
+----
+
+* **to this**:
+
+[source,json]
+----
+
+# NEW config
+
+{
+  "mcpServers": {
+    <EXISTING MCP SERVER>,
+    <EXISTING MCP SERVER>,
+    <EXISTING MCP SERVER>
+    
+    ,
+    "Gradio Letter Counter MCP Server": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "http://127.0.0.1:7860/gradio_api/mcp/sse",
+        "--transport",
+        "sse-only"
+      ]
+    }
+  }
+}
+----
+
+  "Node" and "npx" should be installed for this step to work successfully.
+
+===== Restart Claude Desktop
+Quit and re-run Claude Desktop to use the modified config.
+
+Once the Claude Desktop is running, type the following query:
+
+* `count how many times letter "s" appears in word "assistant"`
+  ** Claude should prompt you for allowing to run the `letter_counter` tool.
+     Click on `Allow once` to have Claude run the tool.
+  ** Claude should show you the correct result from MCP server.
+
+== Links:
+* {uri-ex}[Gradio MCP server] +

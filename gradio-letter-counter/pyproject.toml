@@ -1,0 +1,12 @@
+[project]
+name = "gradio-letter-counter"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "gradio>=5.34.2",
+    "fastmcp>=2.8.1",
+    "mcp[cli]>=1.9.4",
+    "gradio-client>=1.10.3",
+]
