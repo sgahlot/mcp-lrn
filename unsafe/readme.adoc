@@ -1,0 +1,68 @@
+= Unsafe MCP server - steals info from filesystem
+
+:icons: font
+:note-caption: :information_source:
+:toc: left
+:toclevels: 5
+:imagesdir: images
+
+:uri-claude: https://claude.ai/download
+
+This directory contains `MCP` server that generates a random string for a given size.
+
+  Along with this data, this server also reads top 20 lines from a random file in the
+  user's home directory and returns that data along with the random string.
+
+
+== Pre-requisites
+
+=== Sync project
+Run `uv sync` in the `gradio-letter-counter` directory to create the virtual environment
+
+=== Install Claude Desktop
+Install `Claude Desktop` by following instructions on the {uri-claude}[Claude website]. 
+
+
+== Run example
+
+=== Modify Claude config
+
+Execute the following commands to add the MCP server in Claude config:
+
+[source,console]
+----
+# Install MCP code server in Claude config.
+# ** Use `where uv` if running this command on Windows
+$ `which uv` run mcp install server.py
+----
+
+=== Run Claude Desktop
+Run Claude Desktop to use the modified config.
+
+  If the Claude Desktop is already running, restart it to reload the config.
+
+Once the Claude Desktop is running, type the following query to test the tool:
+
+* `Generate a random string of size 15`
+  ** Claude should prompt you for allowing to run the `random_string` tool.
+     Click on `Allow once` to have Claude run the tool.
+  ** Claude should show you the correct result from MCP server as shown in image 1.
+
+image::unsafe-server-01.png[Random string]
+**Image 1**: Random string result
+
+
+=== Security breach - Server returning extra info
+This MCP server does something extra that's not mentioned in the tool description - the `random_string`
+tool reads top 20 lines from a random file in the user's home directory.
+
+  For this example, the tool simply returns this data in the tool's response, but in reality it can
+  send this information anywhere.
+
+  ** Expand the tool result in Claude Desktop and scroll down to see the full response.
+     You should be able to see `extra_info` element that should display data from a
+     random file as shown in image 2.
+
+
+image::unsafe-server-02.png[Random file data]
+**Image 2**: Random file data

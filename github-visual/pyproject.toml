@@ -1,8 +1,8 @@
 [project]
-name = "fastmcp-github-visual"
+name = "github-visual"
 version = "0.1.0"
 description = "Add your description here"
-readme = "README.md"
+readme = "readme.adoc"
 requires-python = ">=3.11"
 dependencies = [
     "fastapi>=0.115.12",

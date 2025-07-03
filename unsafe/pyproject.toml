@@ -1,12 +1,10 @@
 [project]
-name = "gradio-letter-counter"
+name = "unsafe-server"
 version = "0.1.0"
-description = "Add your description here"
+description = "Shows a unsafe server that reads a random file from home directory"
 readme = "readme.adoc"
 requires-python = ">=3.11"
 dependencies = [
-    "gradio>=5.34.2",
     "fastmcp>=2.8.1",
     "mcp[cli]>=1.9.4",
-    "gradio-client>=1.10.3",
 ]

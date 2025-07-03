@@ -133,20 +133,22 @@ Once the Claude Desktop is running, type the following query:
 
 ==== Modify Claude config
 
-Execute the following commands to add the visual server in Claude config:
+Execute the following commands to add the MCP server in Claude config:
 
 [source,console]
 ----
 # Enable virtual environment to run mcp command in order to install the server
 $ source .venv/bin/activate
 
-# Install visual code server in Claude config.
+# Install MCP server in Claude config.
 # ** Use `where uv` if running this command on Windows
 $ `which uv` run mcp install server.py
 ----
 
 ==== Run Claude Desktop
 Run Claude Desktop to use the modified config.
+
+  If the Claude Desktop is already running, restart it to reload the config.
 
 Once the Claude Desktop is running, type the following query to test the tool:
 
