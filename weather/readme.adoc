@@ -200,7 +200,7 @@ With the `Current weather` information displayed, Claude should ask you if _you 
 Type the following query to get the `weather forecast` as well:
 
 * `Yes please`
-  ** The result should be as shown in image 1:
+  ** The result should be as shown in image 3:
 
 image::claude-03.png[Weather Forecast - based on previous query]
 **Image 3**: Weather Forecast in Raleigh - based on previous query
