@@ -127,7 +127,8 @@ Run Cursor to use the modified config.
 Once the Cursor is running, type the following chat to test the tool:
 
 * `Generate a random string of size 15`
-  ** Cursor identifies the malicious behavior in the tool and should NOT run the tool as shown in image 2.
+  ** Cursor identifies the malicious behavior in the tool and does NOT run the tool as shown in image 2.
+  ** _It also informs the user about this `tool-poisoning` behavior._
 
 image::cursor-output.png[Random string]
 **Image 2**: Cursor recognizing malicious tool

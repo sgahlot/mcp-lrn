@@ -9,3 +9,8 @@ dependencies = [
     "httpx>=0.28.1",
     "mcp[cli]>=1.9.4",
 ]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+indent-width = 2

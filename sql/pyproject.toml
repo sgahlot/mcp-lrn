@@ -8,3 +8,8 @@ dependencies = [
     "aiosqlite>=0.21.0",
     "fastmcp>=2.8.1",
 ]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+indent-width = 2
