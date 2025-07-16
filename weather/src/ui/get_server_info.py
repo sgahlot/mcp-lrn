@@ -24,8 +24,8 @@ class WeatherMCPClient:
         # Set environment variable for the server
         os.environ["WEATHER_API_KEY"] = api_key
         
-        # Use same approach as CLI client - relative path to server
-        async with Client("../../server.py") as client:
+        server_script_path = os.path.join(os.path.dirname(__file__), "../../server.py")
+        async with Client(server_script_path) as client:
             # Get resources with detailed info
             resources = await client.list_resources()
             self.resources = []

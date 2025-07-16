@@ -1,4 +1,4 @@
-= Weather MCP Server
+= Weather MCP Server (with UI)
 
 :icons: font
 :note-caption: :information_source:
@@ -8,6 +8,7 @@
 
 :uri-claude: https://claude.ai/download
 :uri-weather-api: https://www.weatherapi.com
+:uri-streamlit: https://streamlit.io
 
 
 A Model Context Protocol (MCP) server that provides weather information using the WeatherAPI.com service.
@@ -25,6 +26,14 @@ to add more details/clarity about testing various tools in Claude and their outp
 * *Weather Forecast*: Get weather forecasts for up to 3 days
 * *Air Quality Data*: Includes air quality information where available
 * *Weather Alerts*: Shows weather alerts and warnings
+
+== UI
+
+* This example has two UIs to showcase the following:
+  ** First UI simply allows one to connect to the Weather MCP server and displays all
+     the tools and resources from the server in a user friendly format
+  ** Second UI (WIP) allows one to connect to the Weather MCP server and invoke the
+     tools through the UI.
 
 == Setup
 
@@ -166,7 +175,11 @@ The server provides comprehensive error handling for:
 * API rate limits
 * Invalid parameters
 
-== Examples
+== Tools usage using Claude Desktop
+
+This section shows how to use various tools of this MCP server in Claude Desktop.
+_The tools are invoked in an order to showcase that Claude remembers a query's context
+when invoking subsequent tools._
 
 === Find Location
 
@@ -206,9 +219,35 @@ image::claude-03.png[Weather Forecast - based on previous query]
 **Image 3**: Weather Forecast in Raleigh - based on previous query
 
 
+== UI
+
+This example has the following two UIs available, both of which are built using {uri-streamlit}[Streamlit]:
+
+* First UI allows you to connect to the MCP server and display all the tools and resources from the server after a successful connection.
+* Second UI (WIP)
+
+=== UI #1
+
+To run this UI, execute the following command, from the `weather` directory, in a terminal:
+
+* `uv run --with streamlit streamlit run src/ui/get_server_info.py`
+
+This should launch a browser as shown in image 4:
+
+image::ui-disconnected.png[Initial/disconnected client]
+**Image 4**: Disconnected client
+
+Provide the Weather API key and click `Connect`. The client should now connect to the server and display all the tools and resources as shown in image 5:
+
+image::ui-connected.png[Connected client]
+**Image 5**: Connected client - all tools/resources
+
+
+
 == Links:
 * {uri-claude}[Claude Desktop download] +
 * {uri-weather-api}[WeatherAPI] +
+* {uri-streamlit}[Streamlit] +
 
 
 == License
